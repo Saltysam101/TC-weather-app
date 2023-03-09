@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <form id="form" action="">
+        <div class="modal">
+            <h2 class="modal-header">Please Enter Your Details</h2>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" name="city" id="city-input" required>
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" name="state" id="state-input" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input value="us" type="text" name="country" id="country-input">
+            </div>
+            <button id="form-btn" type="submit">Submit</button>
+        </div>
+    </form>
+    <main>
+        <nav>
+            <form id="nav-form" action="">
+                <label for="city">City</label>
+                <input type="text" name="city" id="city-input" required>
+                <label for="state">State</label>
+                <input type="text" name="state" id="state-input" required>
+                <label for="country">Country</label>
+                <input value="us" type="text" name="country" id="country-input">
+                <button id="form-btn" type="submit">Submit</button>
+            </form>
+        </nav>
+        <div class="location-info">
+            <h3 id="city-name"></h3>
+            <h3 id="state-name"></h3>
+        </div>
+    </main>
+
+    <script type="module" src="index.js"></script>
+</body>
+
+</html>
