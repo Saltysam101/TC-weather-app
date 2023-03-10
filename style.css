@@ -45,7 +45,7 @@ body {
     border-radius: 5px;
 }
 
-#form-btn {
+.modal-btn {
     width: 120px;
     height: 45px;
     background-color: rgb(94, 188, 250);
@@ -53,10 +53,41 @@ body {
     font-size: 1.2rem;
     border: none;
     border-radius: 5px;
-    margin-top: 1rem;
 }
 
-#form-btn:hover {
+.modal-btn:hover {
+    cursor: pointer;
+    color: rgb(94, 188, 250);
+    background-color: white;
+    border: 1px solid rgb(94, 188, 250);
+}
+
+#nav-form {
+    width: 100%;
+    display: flex;
+    padding-right: 1.5rem;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#nav-form>input {
+    width: 180px;
+    height: 30px;
+    border-radius: 5px;
+    margin: 0 .5rem;
+}
+
+.search-btn {
+    width: 120px;
+    height: 30px;
+    background-color: rgb(94, 188, 250);
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-btn:hover {
     cursor: pointer;
     color: rgb(94, 188, 250);
     background-color: white;
