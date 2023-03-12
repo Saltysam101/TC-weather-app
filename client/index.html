@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <form id="nav-form" action="">
+            <label for="zipcode">Zipcode</label>
+            <input type="number" name="zipcode" id="zipcode-search-input" required>
+            <label for="country">Country</label>
+            <input value="us" type="text" name="country" id="country-search-input">
+            <button class="search-btn" id="search-btn" type="submit">Submit</button>
+        </form>
+    </nav>
+    <main>
+        <div id="card" class="weather-card">
+            <div class="info">
+                <h3 id="city-name"></h3>
+                <h3 id="temperature"></h3><span id="fahrenheit">° F</span> <span id="celsius">° C</span>
+                <p id="description"></p>
+            </div>
+            <button id="save-btn" type="submit">Save Location</button>
+        </div>
+        <div class="saved-locations">
+            <ul id="locations">
+
+            </ul>
+        </div>
+    </main>
+
+    <script type="module" src="index.js"></script>
+</body>
+
+</html>
