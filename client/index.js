@@ -21,16 +21,16 @@ let saveLocation = new SaveLocations();
 
 card.style.display = 'none'
 
-let unit = "imperial";
+
 
 
 
 //search event listener
 searchBtn.addEventListener('click', (event) => {
     event.preventDefault();
-    card.style.display = "block"
+    card.style.display = "flex"
         //Weather api url
-    let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipcodeSearchInput.value},${countrySearchInput.value}&appid=${apiKey}&units=${unit}`;
+    let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipcodeSearchInput.value},${countrySearchInput.value}&appid=${apiKey}&units=imperial`;
 
     if (!zipcodeSearchInput.value) {
         alert("Please fill out the required information")
@@ -45,23 +45,17 @@ searchBtn.addEventListener('click', (event) => {
                 console.log(data)
                 console.log("end data")
 
-                fahrenheit.style.display = 'none'
-                celsius.style.cursor = 'pointer'
+
                 cityHeading.textContent = data.name
                 tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
-                tempHeading.style.cursor = "pointer";
                 pWeatherDescription.textContent = data.weather[0].description
-                celsius.addEventListener('click', () => {
+                tempHeading.addEventListener('click', () => {
                     let celsiusTemp = (data.main.temp - 32) / 1.8;
                     tempHeading.textContent = `${celsiusTemp.toFixed(0)}° C`;
-                    celsius.style.display = 'none'
-                    fahrenheit.style.display = 'inline'
-                    fahrenheit.style.cursor = 'pointer'
-                })
-                fahrenheit.addEventListener('click', () => {
-                    tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
-                    fahrenheit.style.display = 'none';
-                    celsius.style.display = 'inline';
+
+                    tempHeading.addEventListener('click', () => {
+                        tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
+                    })
                 })
 
                 saveBtn.addEventListener("click", (event) => {
@@ -75,7 +69,7 @@ searchBtn.addEventListener('click', (event) => {
                     console.log("end save")
 
                     li.addEventListener("click", () => {
-                        fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${newWeather.zipcode},${newWeather.country}&appid=${apiKey}&units=${unit}`)
+                        fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${newWeather.zipcode},${newWeather.country}&appid=${apiKey}&units=imperial`)
                             .then((res) => {
                                 return res.json()
                             })
@@ -83,6 +77,11 @@ searchBtn.addEventListener('click', (event) => {
                                 cityHeading.textContent = data.name
                                 tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
                             })
+                    })
+                    li.addEventListener("dblclick", () => {
+                        console.log("dbl click")
+                        saveLocation.remove(li)
+                        locationList.removeChild(li)
                     })
                 }, { once: true })
             })
