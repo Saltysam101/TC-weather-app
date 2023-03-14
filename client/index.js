@@ -13,8 +13,6 @@ let tempHeading = document.getElementById("temperature");
 let saveBtn = document.getElementById("save-btn");
 let locationList = document.getElementById("locations");
 let pWeatherDescription = document.getElementById("description");
-let fahrenheit = document.getElementById("fahrenheit")
-let celsius = document.getElementById("celsius")
 let card = document.getElementById("card")
 
 let saveLocation = new SaveLocations();
@@ -49,14 +47,7 @@ searchBtn.addEventListener('click', (event) => {
                 cityHeading.textContent = data.name
                 tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
                 pWeatherDescription.textContent = data.weather[0].description
-                tempHeading.addEventListener('click', () => {
-                    let celsiusTemp = (data.main.temp - 32) / 1.8;
-                    tempHeading.textContent = `${celsiusTemp.toFixed(0)}° C`;
 
-                    tempHeading.addEventListener('click', () => {
-                        tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
-                    })
-                })
 
                 saveBtn.addEventListener("click", (event) => {
                     let newWeather = new Weather(data.name, zipcodeSearchInput.value, countrySearchInput.value)
@@ -90,4 +81,27 @@ searchBtn.addEventListener('click', (event) => {
             })
     }
 
+})
+
+function toggle(v) {
+    return { metric: 'imperial', imperial: 'metric' }[v];
+}
+
+function toggleUnit(v) {
+    return { F: 'C', C: 'F' }[v]
+}
+var position = 'imperial';
+
+var unit = 'F'
+
+
+tempHeading.addEventListener('click', () => {
+    let weatherApi = `https://api.openweathermap.org/data/2.5/weather?zip=${zipcodeSearchInput.value},${countrySearchInput.value}&appid=${apiKey}&units=${position = toggle(position)}`
+    console.log(position)
+    fetch(weatherApi)
+        .then((res) => res.json())
+        .then((data) => {
+            tempHeading.textContent = `${data.main.temp.toFixed(0)}° ${unit = toggleUnit(unit)}`
+            console.log(unit)
+        })
 })
