@@ -19,6 +19,7 @@ let saveLocation = new SaveLocations();
 
 card.style.display = 'none'
 
+let array = [];
 
 
 
@@ -40,9 +41,11 @@ searchBtn.addEventListener('click', (event) => {
                 return res.json()
             })
             .then((data) => {
+                array = []
                 console.log(data)
                 console.log("end data")
-
+                let newWeather = new Weather(data.name, zipcodeSearchInput.value, countrySearchInput.value)
+                array.push(newWeather)
 
                 cityHeading.textContent = data.name
                 tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
@@ -50,12 +53,12 @@ searchBtn.addEventListener('click', (event) => {
 
 
                 saveBtn.addEventListener("click", (event) => {
-                    let newWeather = new Weather(data.name, zipcodeSearchInput.value, countrySearchInput.value)
-                    console.log(newWeather)
-                    saveLocation.save(newWeather);
+                    //let newWeather = new Weather(data.name, zipcodeSearchInput.value, countrySearchInput.value)
+                    console.log(array[0].name)
+                    saveLocation.save(array.slice(-1));
                     console.log(saveLocation)
                     let li = document.createElement("li");
-                    li.textContent = newWeather.name;
+                    li.textContent = array[0].name;
                     locationList.appendChild(li)
                     console.log("end save")
 
