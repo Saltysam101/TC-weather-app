@@ -50,34 +50,6 @@ searchBtn.addEventListener('click', (event) => {
                 cityHeading.textContent = data.name
                 tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
                 pWeatherDescription.textContent = data.weather[0].description
-
-
-                saveBtn.addEventListener("click", (event) => {
-                    //let newWeather = new Weather(data.name, zipcodeSearchInput.value, countrySearchInput.value)
-                    console.log(array[0].name)
-                    saveLocation.save(array.slice(-1));
-                    console.log(saveLocation)
-                    let li = document.createElement("li");
-                    li.textContent = array[0].name;
-                    locationList.appendChild(li)
-                    console.log("end save")
-
-                    li.addEventListener("click", () => {
-                        fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${newWeather.zipcode},${newWeather.country}&appid=${apiKey}&units=imperial`)
-                            .then((res) => {
-                                return res.json()
-                            })
-                            .then((data) => {
-                                cityHeading.textContent = data.name
-                                tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
-                            })
-                    })
-                    li.addEventListener("dblclick", () => {
-                        console.log("dbl click")
-                        saveLocation.remove(li)
-                        locationList.removeChild(li)
-                    })
-                }, { once: true })
             })
             .catch((error) => {
                 console.error(error)
@@ -97,6 +69,32 @@ var position = 'imperial';
 
 var unit = 'F'
 
+ saveBtn.addEventListener("click", (event) => {
+    //saveLocation.save(array);
+    
+    console.log(saveLocation)
+    let li = document.createElement("li");
+    console.log("array",array)
+    li.textContent = array[0].name;
+    locationList.appendChild(li)
+    console.log("end save")
+
+    li.addEventListener("click", () => {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${array[0].zipcode},${array[0].country}&appid=${apiKey}&units=imperial`)
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                cityHeading.textContent = data.name
+                tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
+            })
+    })
+    li.addEventListener("dblclick", () => {
+        console.log("dbl click")
+        saveLocation.remove(li)
+        locationList.removeChild(li)
+    })
+}) 
 
 tempHeading.addEventListener('click', () => {
     let weatherApi = `https://api.openweathermap.org/data/2.5/weather?zip=${zipcodeSearchInput.value},${countrySearchInput.value}&appid=${apiKey}&units=${position = toggle(position)}`

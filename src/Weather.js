@@ -4,4 +4,8 @@ export default class Weather {
         this.zipcode = zipcode
         this.country = country
     }
+
+    static fetchWeather(name, zipcode, country){
+        fetch()
+    }
 }
