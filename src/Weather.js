@@ -1,11 +1,7 @@
 export default class Weather {
-    constructor(name, zipcode, country = 'us') {
-        this.name = name
+    constructor(cityName, zipcode, country = 'us') {
+        this.cityName = cityName
         this.zipcode = zipcode
         this.country = country
-    }
-
-    static fetchWeather(name, zipcode, country){
-        fetch()
     }
 }

@@ -19,41 +19,43 @@ let saveLocation = new SaveLocations();
 
 card.style.display = 'none'
 
-let array = [];
+let weatherArray = [];
 
+
+function fetchWeather(zipcode, country){
+    fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zipcode},${country}&appid=${apiKey}&units=imperial`)
+    .then((res) => {
+        return res.json();
+    })
+    .then((data)=> {
+        console.log(data)
+        //New instance of the Weather Obj
+        const newWeather = new Weather(data.name, zipcode, data.sys.country);
+        weatherArray.push(newWeather);
+        console.log(weatherArray)
+        cityHeading.textContent = data.name
+        tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
+        pWeatherDescription.textContent = data.weather[0].description
+
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+}
 
 
 
 //search event listener
 searchBtn.addEventListener('click', (event) => {
+    //prevents page reload
     event.preventDefault();
+
     card.style.display = "flex"
-        //Weather api url
-    let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipcodeSearchInput.value},${countrySearchInput.value}&appid=${apiKey}&units=imperial`;
 
     if (!zipcodeSearchInput.value) {
         alert("Please fill out the required information")
     } else {
-
-        //Fetch data from api
-        fetch(weatherUrl)
-            .then((res) => {
-                return res.json()
-            })
-            .then((data) => {
-                array = []
-                console.log(data)
-                console.log("end data")
-                let newWeather = new Weather(data.name, zipcodeSearchInput.value, countrySearchInput.value)
-                array.push(newWeather)
-
-                cityHeading.textContent = data.name
-                tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
-                pWeatherDescription.textContent = data.weather[0].description
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+        fetchWeather(zipcodeSearchInput.value, countrySearchInput.value);
     }
 
 })
@@ -70,31 +72,33 @@ var position = 'imperial';
 var unit = 'F'
 
  saveBtn.addEventListener("click", (event) => {
-    //saveLocation.save(array);
+    saveLocation.save(weatherArray);
     
     console.log(saveLocation)
     let li = document.createElement("li");
-    console.log("array",array)
-    li.textContent = array[0].name;
+    console.log("array",weatherArray)
+    li.textContent = weatherArray[weatherArray.length - 1].cityName;
     locationList.appendChild(li)
     console.log("end save")
 
-    li.addEventListener("click", () => {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${array[0].zipcode},${array[0].country}&appid=${apiKey}&units=imperial`)
-            .then((res) => {
-                return res.json()
-            })
-            .then((data) => {
-                cityHeading.textContent = data.name
-                tempHeading.textContent = `${data.main.temp.toFixed(0)}° F`;
-            })
-    })
     li.addEventListener("dblclick", () => {
         console.log("dbl click")
         saveLocation.remove(li)
         locationList.removeChild(li)
     })
+    li.addEventListener("click", () => {
+        //console.log(weatherArray.filter((weather) => weather.cityName === li.textContent), weatherArray)
+        weatherArray.filter((weather) => {
+            weather.cityName === li.textContent ?
+            fetchWeather(weather.zipcode, weather.country):
+            console.log("no")
+        })
+        //fetchWeather(weatherArray[0].zipcode, weatherArray[0].country)
+
+        
+    })
 }) 
+
 
 tempHeading.addEventListener('click', () => {
     let weatherApi = `https://api.openweathermap.org/data/2.5/weather?zip=${zipcodeSearchInput.value},${countrySearchInput.value}&appid=${apiKey}&units=${position = toggle(position)}`
